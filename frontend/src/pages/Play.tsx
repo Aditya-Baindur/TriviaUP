@@ -207,7 +207,7 @@ const Play = () => {
                     className="mt-6 flex flex-col sm:flex-row sm:items-center gap-4 justify-between"
                   >
                     <div className={cn("text-sm font-medium", isCorrect ? "text-success" : "text-destructive")}>
-                      {isCorrect ? `Correct! +${POINTS[current.difficulty]} point${POINTS[current.difficulty] > 1 ? "s" : ""}` : `Not quite — answer: ${decodedAnswer}`}
+                      {isCorrect ? `Correct! +${POINTS[current.difficulty]} point${POINTS[current.difficulty] > 1 ? "s" : ""}` : `Correct Answer: ${decodedAnswer}`}
                     </div>
                     <Button onClick={handleNext} className="rounded-full" size="lg">
                       {index + 1 >= questions.length ? "See results" : "Next question"}
