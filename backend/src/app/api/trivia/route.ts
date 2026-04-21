@@ -20,6 +20,10 @@ export async function GET(req: Request) {
   const amount = Number(searchParams.get("amount") ?? "10");
   const token = searchParams.get("token");
   const difficulty = searchParams.get("difficulty");
+
+
+
+
   const type = searchParams.get("type");
   const category = searchParams.get("category");
 
@@ -30,13 +34,17 @@ export async function GET(req: Request) {
       { status: 400 }
     );
   }
-
-  const params = new URLSearchParams({
+    const params = new URLSearchParams({
     amount: String(amount),
   });
 
+  const validDifficulties = ["easy", "medium", "hard"];
+  
+  if (difficulty && validDifficulties.includes(difficulty)) {
+    params.append("difficulty", difficulty);
+  }
+
   if (token) params.append("token", token);
-  if (difficulty) params.append("difficulty", difficulty);
   if (type) params.append("type", type);
   if (category) params.append("category", category);
 
