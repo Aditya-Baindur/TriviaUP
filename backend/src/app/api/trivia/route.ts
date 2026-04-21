@@ -20,10 +20,6 @@ export async function GET(req: Request) {
   const amount = Number(searchParams.get("amount") ?? "10");
   const token = searchParams.get("token");
   const difficulty = searchParams.get("difficulty");
-
-
-
-
   const type = searchParams.get("type");
   const category = searchParams.get("category");
 
@@ -34,25 +30,33 @@ export async function GET(req: Request) {
       { status: 400 }
     );
   }
-    const params = new URLSearchParams({
+
+  const params = new URLSearchParams({
     amount: String(amount),
   });
 
-  const validDifficulties = ["easy", "medium", "hard"];
-  
-  if (difficulty && validDifficulties.includes(difficulty)) {
+  // Only exclude the specific param if it is "any"
+  if (difficulty && difficulty !== "any") {
     params.append("difficulty", difficulty);
   }
 
-  if (token) params.append("token", token);
-  if (type) params.append("type", type);
-  if (category) params.append("category", category);
+  if (type && type !== "any") {
+    params.append("type", type);
+  }
+
+  if (category && category !== "any") {
+    params.append("category", category);
+  }
+
+  if (token) {
+    params.append("token", token);
+  }
 
   const url = `https://opentdb.com/api.php?${params.toString()}`;
 
   try {
     const res = await fetch(url, {
-      cache: "no-store", 
+      cache: "no-store",
     });
 
     if (!res.ok) {

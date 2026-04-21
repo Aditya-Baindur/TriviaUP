@@ -26,7 +26,7 @@ const Play = () => {
   const [params] = useSearchParams();
   const navigate = useNavigate();
 
-  const difficulty = (params.get("difficulty") as Difficulty) || "easy";
+  const difficulty = (params.get("difficulty") as Difficulty) || "any";
   const type = (params.get("type") as QuestionType) || "any";
   const amount = Math.min(Math.max(parseInt(params.get("amount") || "10", 10), 1), 30);
 
