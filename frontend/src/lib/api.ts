@@ -2,7 +2,7 @@ const BASE_URL = "https://backend.triviaup.adityabaindur.com/api/trivia";
 const TOKEN_KEY = "triviaup_token";
 const TOKEN_TTL_MS = 6 * 60 * 60 * 1000; // 6 hours
 
-export type Difficulty = "easy" | "medium" | "hard";
+export type Difficulty = "easy" | "medium" | "hard" | "any";
 export type QuestionType = "boolean" | "multiple" | "any";
 
 export interface TriviaQuestion {
@@ -78,7 +78,12 @@ export async function fetchTrivia(params: FetchTriviaParams): Promise<TriviaQues
   const token = await ensureToken();
   const url = new URL(BASE_URL);
   url.searchParams.set("amount", String(params.amount));
-  url.searchParams.set("difficulty", params.difficulty);
+  
+  // Only set difficulty if NOT mixed (any)
+  if (params.difficulty && params.difficulty !== "any") {
+    url.searchParams.set("difficulty", params.difficulty);
+  }
+  
   if (params.type && params.type !== "any") url.searchParams.set("type", params.type);
   url.searchParams.set("token", token);
 

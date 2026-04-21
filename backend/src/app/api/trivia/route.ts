@@ -44,7 +44,7 @@ export async function GET(req: Request) {
 
   try {
     const res = await fetch(url, {
-      cache: "no-store", // 👈 important in Next.js
+      cache: "no-store", 
     });
 
     if (!res.ok) {
