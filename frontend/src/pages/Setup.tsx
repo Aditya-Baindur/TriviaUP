@@ -51,9 +51,8 @@ export default function Setup() {
       params.set("difficulty", finalDifficulty);
     } 
 
-    console.log(params.toString());
-
-    await sleep(5000)
+    // console.error(params) 
+    // await sleep(10000)
     
     navigate(`/play?${params.toString()}`);
   };
@@ -123,7 +122,7 @@ export default function Setup() {
                 type === "any" && "bg-secondary border-foreground"
               )}
             >
-              🎲 Mixed Questions
+              Mixed Questions
             </button>
 
             <div className="grid grid-cols-2 gap-3 mt-3">
@@ -155,7 +154,7 @@ export default function Setup() {
 
           {/* Buttons */}
           <Button onClick={() => start()} className="w-full h-12">
-            Start Game <ArrowRight className="ml-2 h-4 w-4" />
+            Start Game<ArrowRight className="ml-2 h-4 w-4" />
           </Button>
 
           <Button

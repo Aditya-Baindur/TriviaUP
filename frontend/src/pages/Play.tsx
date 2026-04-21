@@ -10,7 +10,7 @@ import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { fetchTrivia, decodeHtml, type Difficulty, type QuestionType, type TriviaQuestion } from "@/lib/api";
 
-const POINTS: Record<Difficulty, number> = { easy: 1, medium: 2, hard: 3 };
+const POINTS: Record<Difficulty, number> = { easy: 1, medium: 2, hard: 3, any: 4 };
 
 interface AnswerRecord {
   question: string;

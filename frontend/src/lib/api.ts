@@ -2,7 +2,7 @@ const BASE_URL = "https://backend.triviaup.adityabaindur.com/api/trivia";
 const TOKEN_KEY = "triviaup_token";
 const TOKEN_TTL_MS = 6 * 60 * 60 * 1000; // 6 hours
 
-export type Difficulty = "easy" | "medium" | "hard";
+export type Difficulty = "easy" | "medium" | "hard" | "any";
 export type QuestionType = "boolean" | "multiple" | "any";
 
 export interface TriviaQuestion {
