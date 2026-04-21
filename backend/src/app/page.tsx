@@ -17,27 +17,26 @@ export default function Home() {
           priority
         />
 
-        {/* Title */}
+        {/* Title | Only for HTML anchor to follow WCAG AAA*/}
         <h1 className="text-2xl font-semibold tracking-tight">
-          TriviaUP Backend
+          Backend of TriviaUP
         </h1>
 
         {/* Description */}
         <p className="max-w-md text-sm text-zinc-400">
-          API service for TriviaUP. Handles question retrieval, difficulty,
-          and game logic.
+          API service for TriviaUP. Handles question retrieval, difficulty, and game logic.
         </p>
 
         {/* Actions */}
         <div className="flex gap-3 pt-2">
           <Link href={process.env.BASE_URL ?? "/"}>
-            <Button className="bg-white text-black hover:bg-zinc-200">
+            <Button className="bg-white text-black hover:bg-zinc-400">
               Open App
             </Button>
           </Link>
 
           <Link href="https://docs.adityabaindur.dev/docs/TriviaUP/API">
-            <Button variant="outline" className="border-zinc-700 text-black bg-white hover:bg-zinc-900">
+            <Button variant="outline" className="border-zinc-700 text-black bg-white hover:bg-zinc-400">
               API Documentation
             </Button>
           </Link>
