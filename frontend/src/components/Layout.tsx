@@ -1,12 +1,13 @@
-import { Link } from "react-router-dom";
-import { ReactNode } from "react";
-import { Logo } from "./Logo";
-import { ThemeToggle } from "./ThemeToggle";
-import { ArrowUpRight } from "lucide-react";
+import { Link } from 'react-router-dom'
+import { ReactNode } from 'react'
+import { Logo } from './Logo'
+import { ThemeToggle } from './ThemeToggle'
+import { ArrowUpRight } from 'lucide-react'
+import { SiGithub } from "react-icons/si";
 
 export function Layout({ children }: { children: ReactNode }) {
   return (
-    <div className="min-h-screen flex flex-col bg-background">
+    <div className="flex min-h-screen flex-col bg-background">
       <header className="sticky top-0 z-40 border-b border-border/60 bg-background/80 backdrop-blur-xl">
         <div className="container flex h-16 items-center justify-between">
           <Link to="/" className="flex items-center" aria-label="TriviaUP home">
@@ -15,15 +16,20 @@ export function Layout({ children }: { children: ReactNode }) {
 
           <div className="flex items-center gap-2">
             <ThemeToggle />
+
+          <Link to="/github">
+            <SiGithub />
+          </Link>
+          
           </div>
         </div>
       </header>
 
-      <main className="flex-1 flex flex-col">{children}</main>
+      <main className="flex flex-1 flex-col">{children}</main>
 
       <footer className="border-t border-border/60 py-6">
         <div className="container text-center text-xs text-muted-foreground">
-          Built for the Student Health & Wellness coding challenge by{" "}
+          Built for the Student Health & Wellness coding challenge by{' '}
           <a
             href="https://adityabaindur.com"
             target="_blank"
@@ -36,5 +42,5 @@ export function Layout({ children }: { children: ReactNode }) {
         </div>
       </footer>
     </div>
-  );
+  )
 }

@@ -1,74 +1,94 @@
-import { useEffect, useMemo, useState } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
-import { AnimatePresence, motion } from "framer-motion";
-import { Check, X, Loader2, ArrowRight } from "lucide-react";
-import { Layout } from "@/components/Layout";
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
-import { Badge } from "@/components/ui/badge";
-import { cn } from "@/lib/utils";
-import { fetchTrivia, decodeHtml, type Difficulty, type QuestionType, type TriviaQuestion } from "@/lib/api";
+import { useEffect, useMemo, useState } from 'react'
+import { useNavigate, useSearchParams } from 'react-router-dom'
+import { AnimatePresence, motion } from 'framer-motion'
+import { Check, X, Loader2, ArrowRight } from 'lucide-react'
+import { Layout } from '@/components/Layout'
+import { Button } from '@/components/ui/button'
+import { Card } from '@/components/ui/card'
+import { Progress } from '@/components/ui/progress'
+import { Badge } from '@/components/ui/badge'
+import { cn } from '@/lib/utils'
+import {
+  fetchTrivia,
+  decodeHtml,
+  type Difficulty,
+  type QuestionType,
+  type TriviaQuestion,
+} from '@/lib/api'
 
-const POINTS: Record<Difficulty, number> = { easy: 1, medium: 2, hard: 3, any: 4 };
+const POINTS: Record<Difficulty, number> = {
+  easy: 1,
+  medium: 2,
+  hard: 3,
+  any: 4,
+}
 
 interface AnswerRecord {
-  question: string;
-  category: string;
-  difficulty: Difficulty;
-  correct: boolean;
-  selected: string;
-  answer: string;
-  points: number;
+  question: string
+  category: string
+  difficulty: Difficulty
+  correct: boolean
+  selected: string
+  answer: string
+  points: number
 }
 
 const Play = () => {
-  const [params] = useSearchParams();
-  const navigate = useNavigate();
+  const [params] = useSearchParams()
+  const navigate = useNavigate()
 
-  const difficulty = (params.get("difficulty") as Difficulty) || "any";
-  const type = (params.get("type") as QuestionType) || "any";
-  const amount = Math.min(Math.max(parseInt(params.get("amount") || "10", 10), 1), 30);
+  const difficulty = (params.get('difficulty') as Difficulty) || 'any'
+  const type = (params.get('type') as QuestionType) || 'any'
+  const amount = Math.min(
+    Math.max(parseInt(params.get('amount') || '10', 10), 1),
+    30
+  )
 
-  const [questions, setQuestions] = useState<TriviaQuestion[] | null>(null);
-  const [error, setError] = useState<string | null>(null);
-  const [index, setIndex] = useState(0);
-  const [selected, setSelected] = useState<string | null>(null);
-  const [score, setScore] = useState(0);
-  const [history, setHistory] = useState<AnswerRecord[]>([]);
+  const [questions, setQuestions] = useState<TriviaQuestion[] | null>(null)
+  const [error, setError] = useState<string | null>(null)
+  const [index, setIndex] = useState(0)
+  const [selected, setSelected] = useState<string | null>(null)
+  const [score, setScore] = useState(0)
+  const [history, setHistory] = useState<AnswerRecord[]>([])
 
   useEffect(() => {
-    let cancelled = false;
-    setQuestions(null);
-    setError(null);
+    let cancelled = false
+    setQuestions(null)
+    setError(null)
     fetchTrivia({ amount, difficulty, type })
       .then((qs) => {
-        if (cancelled) return;
+        if (cancelled) return
         if (!qs.length) {
-          setError("No questions returned. Try different settings.");
+          setError('No questions returned. Try different settings.')
         } else {
-          setQuestions(qs);
+          setQuestions(qs)
         }
       })
-      .catch(() => !cancelled && setError("Couldn't fetch questions. Please try again."));
+      .catch(
+        () =>
+          !cancelled && setError("Couldn't fetch questions. Please try again.")
+      )
     return () => {
-      cancelled = true;
-    };
-  }, [amount, difficulty, type]);
+      cancelled = true
+    }
+  }, [amount, difficulty, type])
 
-  const current = questions?.[index];
-  const total = questions?.length ?? amount;
-  const progress = ((index + (selected ? 1 : 0)) / total) * 100;
+  const current = questions?.[index]
+  const total = questions?.length ?? amount
+  const progress = ((index + (selected ? 1 : 0)) / total) * 100
 
-  const decodedOptions = useMemo(() => current?.options.map(decodeHtml) ?? [], [current]);
-  const decodedAnswer = current ? decodeHtml(current.correctAnswer) : "";
+  const decodedOptions = useMemo(
+    () => current?.options.map(decodeHtml) ?? [],
+    [current]
+  )
+  const decodedAnswer = current ? decodeHtml(current.correctAnswer) : ''
 
   const handleSelect = (opt: string) => {
-    if (selected || !current) return;
-    setSelected(opt);
-    const correct = opt === decodedAnswer;
-    const points = correct ? POINTS[current.difficulty] : 0;
-    if (correct) setScore((s) => s + points);
+    if (selected || !current) return
+    setSelected(opt)
+    const correct = opt === decodedAnswer
+    const points = correct ? POINTS[current.difficulty] : 0
+    if (correct) setScore((s) => s + points)
     setHistory((h) => [
       ...h,
       {
@@ -80,15 +100,15 @@ const Play = () => {
         answer: decodedAnswer,
         points,
       },
-    ]);
-  };
+    ])
+  }
 
   const handleNext = () => {
-    if (!questions) return;
+    if (!questions) return
     if (index + 1 >= questions.length) {
       // Persist results for stats and pass to results page via state
-      const finalHistory = history;
-      const stats = JSON.parse(localStorage.getItem("triviaup_stats") || "[]");
+      const finalHistory = history
+      const stats = JSON.parse(localStorage.getItem('triviaup_stats') || '[]')
       stats.push({
         date: Date.now(),
         score,
@@ -96,54 +116,73 @@ const Play = () => {
         difficulty,
         type,
         history: finalHistory,
-      });
-      localStorage.setItem("triviaup_stats", JSON.stringify(stats));
+      })
+      localStorage.setItem('triviaup_stats', JSON.stringify(stats))
 
-      navigate("/results", {
-        state: { score, total: questions.length, difficulty, history: finalHistory },
-      });
-      return;
+      navigate('/results', {
+        state: {
+          score,
+          total: questions.length,
+          difficulty,
+          history: finalHistory,
+        },
+      })
+      return
     }
-    setIndex((i) => i + 1);
-    setSelected(null);
-  };
+    setIndex((i) => i + 1)
+    setSelected(null)
+  }
 
   if (error) {
     return (
       <Layout>
         <div className="container max-w-xl py-20 text-center">
-          <h2 className="font-display text-2xl font-semibold">Something went wrong</h2>
+          <h2 className="font-display text-2xl font-semibold">
+            Something went wrong
+          </h2>
           <p className="mt-2 text-muted-foreground">{error}</p>
-          <Button className="mt-6 rounded-full" onClick={() => navigate("/setup")}>
+          <Button
+            className="mt-6 rounded-full"
+            onClick={() => navigate('/setup')}
+          >
             Back to setup
           </Button>
         </div>
       </Layout>
-    );
+    )
   }
 
   if (!questions || !current) {
     return (
       <Layout>
-        <div className="container flex-1 flex flex-col items-center justify-center py-20">
+        <div className="container flex flex-1 flex-col items-center justify-center py-20">
           <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
-          <p className="mt-4 text-sm text-muted-foreground">Loading your questions…</p>
+          <p className="mt-4 text-sm text-muted-foreground">
+            Loading your questions…
+          </p>
         </div>
       </Layout>
-    );
+    )
   }
 
-  const isCorrect = selected !== null && selected === decodedAnswer;
+  const isCorrect = selected !== null && selected === decodedAnswer
 
   return (
     <Layout>
-      <div className="container max-w-2xl py-8 md:py-12 flex-1 flex flex-col">
-        <div className="flex items-center justify-between gap-4 mb-4">
+      <div className="container flex max-w-2xl flex-1 flex-col py-8 md:py-12">
+        <div className="mb-4 flex items-center justify-between gap-4">
           <div className="text-sm text-muted-foreground">
-            Question <span className="font-semibold text-foreground tabular-nums">{index + 1}</span> / {total}
+            Question{' '}
+            <span className="font-semibold tabular-nums text-foreground">
+              {index + 1}
+            </span>{' '}
+            / {total}
           </div>
           <div className="text-sm">
-            Score <span className="font-display font-semibold tabular-nums">{score}</span>
+            Score{' '}
+            <span className="font-display font-semibold tabular-nums">
+              {score}
+            </span>
           </div>
         </div>
         <Progress value={progress} className="h-1.5" />
@@ -157,22 +196,33 @@ const Play = () => {
             transition={{ duration: 0.3 }}
             className="mt-8"
           >
-            <Card className="p-6 md:p-8 border-border/70">
+            <Card className="border-border/70 p-6 md:p-8">
               <div className="flex flex-wrap items-center gap-2">
-                <Badge variant="secondary" className="rounded-full">{decodeHtml(current.category)}</Badge>
-                <Badge variant="outline" className="rounded-full capitalize">{current.difficulty}</Badge>
-                <Badge variant="outline" className="rounded-full">+{POINTS[current.difficulty]} pt</Badge>
+                <Badge variant="secondary" className="rounded-full">
+                  {decodeHtml(current.category)}
+                </Badge>
+                <Badge variant="outline" className="rounded-full capitalize">
+                  {current.difficulty}
+                </Badge>
+                <Badge variant="outline" className="rounded-full">
+                  +{POINTS[current.difficulty]} pt
+                </Badge>
               </div>
-              <h2 className="mt-5 font-display text-2xl md:text-3xl font-semibold leading-snug">
+              <h2 className="mt-5 font-display text-2xl font-semibold leading-snug md:text-3xl">
                 {decodeHtml(current.question)}
               </h2>
 
-              <div className={cn("mt-6 grid gap-3", current.type === "boolean" ? "grid-cols-2" : "grid-cols-1")}>
+              <div
+                className={cn(
+                  'mt-6 grid gap-3',
+                  current.type === 'boolean' ? 'grid-cols-2' : 'grid-cols-1'
+                )}
+              >
                 {decodedOptions.map((opt) => {
-                  const isSelected = selected === opt;
-                  const isAnswer = opt === decodedAnswer;
-                  const showCorrect = selected !== null && isAnswer;
-                  const showWrong = isSelected && !isAnswer;
+                  const isSelected = selected === opt
+                  const isAnswer = opt === decodedAnswer
+                  const showCorrect = selected !== null && isAnswer
+                  const showWrong = isSelected && !isAnswer
                   return (
                     <button
                       key={opt}
@@ -180,21 +230,31 @@ const Play = () => {
                       onClick={() => handleSelect(opt)}
                       disabled={selected !== null}
                       className={cn(
-                        "group relative text-left rounded-xl border p-4 transition-all",
-                        "disabled:cursor-default",
-                        selected === null && "hover:border-foreground/50 hover:bg-secondary/60",
-                        showCorrect && "border-success bg-success/10 text-foreground",
-                        showWrong && "border-destructive bg-destructive/10 text-foreground",
-                        !showCorrect && !showWrong && selected !== null && "opacity-50",
+                        'group relative rounded-xl border p-4 text-left transition-all',
+                        'disabled:cursor-default',
+                        selected === null &&
+                          'hover:border-foreground/50 hover:bg-secondary/60',
+                        showCorrect &&
+                          'border-success bg-success/10 text-foreground',
+                        showWrong &&
+                          'border-destructive bg-destructive/10 text-foreground',
+                        !showCorrect &&
+                          !showWrong &&
+                          selected !== null &&
+                          'opacity-50'
                       )}
                     >
                       <div className="flex items-center justify-between gap-3">
                         <span className="font-medium">{opt}</span>
-                        {showCorrect && <Check className="h-5 w-5 text-success shrink-0" />}
-                        {showWrong && <X className="h-5 w-5 text-destructive shrink-0" />}
+                        {showCorrect && (
+                          <Check className="h-5 w-5 shrink-0 text-success" />
+                        )}
+                        {showWrong && (
+                          <X className="h-5 w-5 shrink-0 text-destructive" />
+                        )}
                       </div>
                     </button>
-                  );
+                  )
                 })}
               </div>
 
@@ -204,13 +264,26 @@ const Play = () => {
                     initial={{ opacity: 0, y: 8 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0 }}
-                    className="mt-6 flex flex-col sm:flex-row sm:items-center gap-4 justify-between"
+                    className="mt-6 flex flex-col justify-between gap-4 sm:flex-row sm:items-center"
                   >
-                    <div className={cn("text-sm font-medium", isCorrect ? "text-success" : "text-destructive")}>
-                      {isCorrect ? `Correct! +${POINTS[current.difficulty]} point${POINTS[current.difficulty] > 1 ? "s" : ""}` : `Correct Answer: ${decodedAnswer}`}
+                    <div
+                      className={cn(
+                        'text-sm font-medium',
+                        isCorrect ? 'text-success' : 'text-destructive'
+                      )}
+                    >
+                      {isCorrect
+                        ? `Correct! +${POINTS[current.difficulty]} point${POINTS[current.difficulty] > 1 ? 's' : ''}`
+                        : `Correct Answer: ${decodedAnswer}`}
                     </div>
-                    <Button onClick={handleNext} className="rounded-full" size="lg">
-                      {index + 1 >= questions.length ? "See results" : "Next question"}
+                    <Button
+                      onClick={handleNext}
+                      className="rounded-full"
+                      size="lg"
+                    >
+                      {index + 1 >= questions.length
+                        ? 'See results'
+                        : 'Next question'}
                       <ArrowRight className="ml-2 h-4 w-4" />
                     </Button>
                   </motion.div>
@@ -221,7 +294,7 @@ const Play = () => {
         </AnimatePresence>
       </div>
     </Layout>
-  );
-};
+  )
+}
 
-export default Play;
+export default Play

@@ -1,1 +1,1 @@
-export const STORAGE_KEY = "triviaup_theme";
+export const STORAGE_KEY = 'triviaup_theme'

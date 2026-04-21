@@ -111,18 +111,28 @@
 
   body {
     @apply bg-background text-foreground antialiased;
-    font-feature-settings: "ss01", "cv11";
+    font-feature-settings: 'ss01', 'cv11';
   }
 
-  h1, h2, h3, h4, h5, h6, .font-display {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  .font-display {
     font-family: 'Space Grotesk', system-ui, sans-serif;
     letter-spacing: -0.02em;
   }
 }
 
 @layer utilities {
-  .shadow-soft { box-shadow: var(--shadow-md); }
-  .shadow-elevated { box-shadow: var(--shadow-lg); }
+  .shadow-soft {
+    box-shadow: var(--shadow-md);
+  }
+  .shadow-elevated {
+    box-shadow: var(--shadow-lg);
+  }
 
   .bg-grid {
     background-image:
