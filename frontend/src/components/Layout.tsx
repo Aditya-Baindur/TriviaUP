@@ -7,15 +7,9 @@ import { ArrowUpRight } from "lucide-react";
 export function Layout({ children }: { children: ReactNode }) {
   return (
     <div className="min-h-screen flex flex-col bg-background">
-      
-      {/* Header */}
       <header className="sticky top-0 z-40 border-b border-border/60 bg-background/80 backdrop-blur-xl">
         <div className="container flex h-16 items-center justify-between">
-          <Link
-            to="/"
-            className="flex items-center"
-            aria-label="TriviaUP home"
-          >
+          <Link to="/" className="flex items-center" aria-label="TriviaUP home">
             <Logo className="h-7 w-auto" />
           </Link>
 
@@ -25,12 +19,8 @@ export function Layout({ children }: { children: ReactNode }) {
         </div>
       </header>
 
-      {/* Main */}
-      <main className="flex-1 flex flex-col">
-        {children}
-      </main>
+      <main className="flex-1 flex flex-col">{children}</main>
 
-      {/* Footer */}
       <footer className="border-t border-border/60 py-6">
         <div className="container text-center text-xs text-muted-foreground">
           Built for the Student Health & Wellness coding challenge by{" "}

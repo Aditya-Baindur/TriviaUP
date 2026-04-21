@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useState, ReactNode } from "react";
+import { STORAGE_KEY } from "@/components/theme-constants";
 
 type Theme = "light" | "dark";
 
@@ -8,8 +9,6 @@ interface ThemeContextValue {
 }
 
 const ThemeContext = createContext<ThemeContextValue | undefined>(undefined);
-
-const STORAGE_KEY = "triviaup_theme";
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
   const [theme, setTheme] = useState<Theme>(() => {
