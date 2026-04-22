@@ -1,27 +1,28 @@
 import { NextResponse } from "next/server"
 import type { NextRequest } from "next/server"
 
-export function proxy(req: NextRequest) {
-  if (req.method === "OPTIONS") {
+export function proxy(request: NextRequest) {
+  const origin = request.headers.get("origin") || "*"
+
+  // Handle preflight
+  if (request.method === "OPTIONS") {
     return new NextResponse(null, {
       status: 200,
-      headers: corsHeaders,
+      headers: {
+        "Access-Control-Allow-Origin": origin,
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+      },
     })
   }
 
-  const res = NextResponse.next()
+  const response = NextResponse.next()
 
-  Object.entries(corsHeaders).forEach(([key, value]) => {
-    res.headers.set(key, value)
-  })
+  response.headers.set("Access-Control-Allow-Origin", origin)
+  response.headers.set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
+  response.headers.set("Access-Control-Allow-Headers", "Content-Type, Authorization")
 
-  return res
-}
-
-const corsHeaders = {
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
-  "Access-Control-Allow-Headers": "Content-Type, Authorization",
+  return response
 }
 
 export const config = {
