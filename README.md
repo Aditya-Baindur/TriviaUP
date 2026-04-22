@@ -33,10 +33,17 @@ TriviaUP is a game platform designed to help users progressively build and test 
 
 https://github.com/user-attachments/assets/19cfe77d-e9d1-4cfb-bf0f-d0f4a3a40fcf
 
-
 <p align="center">
   You can check out the deployed version here : <a href='https://triviaup.adityabaindur.com/'>triviaup.adityabaindur.com</a>
 </p>
+
+---
+
+## Design Philosophy
+
+Most trivia apps are random and disposable.
+
+TriviaUP is built around progression, giving users structured difficulty, feedback, and scoring so improvement is measurable, not accidental.
 
 ---
 
@@ -53,7 +60,7 @@ https://github.com/user-attachments/assets/19cfe77d-e9d1-4cfb-bf0f-d0f4a3a40fcf
 ### Extended
 
 - Scoring system with weighted difficulty
-- Category-based questions
+- Category based questions
 - Animated transitions and interactions
 - Performance metrics (difficulty and category tracking)
 
@@ -61,13 +68,16 @@ https://github.com/user-attachments/assets/19cfe77d-e9d1-4cfb-bf0f-d0f4a3a40fcf
 
 ## Tech Stack
 
-- React (Vite)
-- TypeScript
-- Tailwind CSS
-- shadcn/ui
-- Next.js (backend)
-- Framer Motion
-- Vercel (deployment)
+**Frontend**
+- React (Vite), TypeScript
+- Tailwind CSS + shadcn/ui
+- Framer Motion (animations)
+
+**Backend**
+- Next.js API routes
+
+**Deployment**
+- Vercel (frontend + backend)
 
 Documentation (includes API playground):
 [https://docs.adityabaindur.dev/docs/TriviaUP/API](https://docs.adityabaindur.dev/docs/TriviaUP/API)
@@ -83,16 +93,57 @@ Full API and deployment documentation:
 
 ## Local Development
 
+### Clone the repo:
+
 ```bash
 git clone https://github.com/Aditya-Baindur/TriviaUP.git
 cd TriviaUP
 ```
 
+### Setup the environment variables:
+
+The default variable default to localhost:5173 (frontend) and localhost:3000 (backend). If you use other ports, you will need to change the values of those variables
+
+```bash
+cp frontend/env.example frontend/.env  
+cp backend/env.example backend/.env  
+```
+
+### Install dependencies and run the project:
+
+Always run in root of project for pnpm workspace
 
 ```bash
 pnpm install
 pnpm dev
 ```
+
+Running `pnpm dev` will start both services and display their local URLs:
+
+```bash
+> pnpm dev
+
+> @triviaup/root@1.0.0 dev /Users/adityabaindur/school/JuniorDev
+> pnpm -r --parallel dev
+
+Scope: 2 of 3 workspace projects
+backend dev$ next dev
+frontend dev$ vite
+backend dev: ▲ Next.js 16.2.4 (Turbopack)
+backend dev: - Local:         http://localhost:3000
+backend dev: - Network:       http://10.20.5.35:3000
+backend dev: - Environments: .env.local
+backend dev: ✓ Ready in 502ms
+frontend dev:   VITE v5.4.21  ready in 7051 ms
+frontend dev:   ➜  Local:   http://localhost:5173/
+frontend dev:   ➜  Network: use --host to expose
+
+```
+
+Finally, you can visit :
+
+Frontend : [http://localhost:5173/](http://localhost:5173/)
+Backend : [http://localhost:3000/](http://localhost:3000/)
 
 ### Deployment
 
