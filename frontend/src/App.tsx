@@ -38,7 +38,8 @@ const App = () => (
             <Route path="/play" element={<Play />} />
             <Route path="/results" element={<Results />} />
             <Route path="/stats" element={<Stats />} />
-            <Route path="/:keyName" element={<Redirect />} />
+            <Route path="/github" element={<Redirect keyName='github'/>} />
+            <Route path="/docs" element={<Redirect keyName='docs'/>} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
