@@ -29,7 +29,7 @@ export default function Home() {
 
         {/* Actions */}
         <div className="flex gap-3 pt-2">
-          <Link href={process.env.BASE_URL ?? "/"}>
+          <Link href={process.env.BASE_URL ?? "https://triviaup.adityabaindur.com"}>
             <Button className="bg-white text-black hover:bg-zinc-400">
               Open App
             </Button>

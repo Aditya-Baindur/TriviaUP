@@ -1,4 +1,4 @@
-const BASE_URL = 'https://backend.triviaup.adityabaindur.com/api/trivia'
+const BASE_URL = process.env.BASE_URL ?? 'https://backend.triviaup.adityabaindur.com/api/trivia'
 const TOKEN_KEY = 'triviaup_token'
 const TOKEN_TTL_MS = 6 * 60 * 60 * 1000 // 6 hours
 

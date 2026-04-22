@@ -11,7 +11,7 @@ const RedirectDb: RedirectDB = {
     label: 'GitHub',
   },
   docs: {
-    url: 'https://docs.adityabaindur.dev/docs/TriviaUP/API',
+    url: 'https://docs.adityabaindur.dev/docs/TriviaUP',
     label: 'Docs',
   },
 }
