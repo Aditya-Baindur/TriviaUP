@@ -1,11 +1,13 @@
 <br/>
 
 <p align="center">
-  <picture>
-    <source srcset="./assets/logo-dark.png" media="(prefers-color-scheme: dark)" />
-    <source srcset="./assets/logo-light.png" media="(prefers-color-scheme: light)" />
-    <img src="./assets/logo-dark.png" alt="TriviaUP Logo" width="220" />
-  </picture>
+  <a href='https://triviaup.adityabaindur.com/'> 
+    <picture>
+      <source srcset="./assets/logo-dark.png" media="(prefers-color-scheme: dark)" />
+      <source srcset="./assets/logo-light.png" media="(prefers-color-scheme: light)" />
+      <img src="./assets/logo-dark.png" alt="TriviaUP Logo" width="220" />
+    </picture>
+  </a>
 </p>
 
 <p align="center">
