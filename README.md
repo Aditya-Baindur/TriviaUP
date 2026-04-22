@@ -29,7 +29,8 @@ TriviaUP is a game platform designed to help users progressively build and test 
 
 ## Demo
 
-https://github.com/user-attachments/assets/d511de45-1cc0-467a-9feb-6f2d81540b68
+https://github.com/user-attachments/assets/19cfe77d-e9d1-4cfb-bf0f-d0f4a3a40fcf
+
 
 <p align="center">
   You can check out the deployed version here : <a href='https://triviaup.adityabaindur.com/'>triviaup.adityabaindur.com</a>
