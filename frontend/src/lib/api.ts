@@ -1,4 +1,22 @@
-const VITE_URL = await import.meta.env.VITE_BASE_URL
+/**
+ * API Handler
+ *
+ * Utility functions for interacting with the TriviaUP backend API.
+ *
+ * Responsibilities:
+ * - Manage session tokens (store, refresh, validate)
+ * - Fetch trivia questions from backend
+ * - Handle retries on expired tokens
+ * - Provide helper utilities (e.g., HTML decoding)
+ *
+ * @notes
+ * - Uses localStorage for token persistence
+ * - Token expires after 6 hours
+ * - Automatically refreshes token when needed
+ */
+
+
+const VITE_URL = import.meta.env.VITE_BASE_URL
 
 console.log(`Backend URL : ${VITE_URL}`)
 
