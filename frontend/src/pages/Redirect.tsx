@@ -26,11 +26,26 @@ export default function Redirect({ keyName }: Props) {
   useEffect(() => {
     const run = async () => {
       await sleep(500)
-      window.location.replace(item.url)
+
+      if (item) {
+        window.location.replace(item.url)
+      } else {
+        window.location.replace("/") 
+      }
     }
 
     run()
-  }, [keyName, item.url])
+  }, [item])
+
+  if (!item) {
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        <p className="text-sm text-muted-foreground">
+          Invalid redirect, taking you home...
+        </p>
+      </div>
+    )
+  }
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-background">
