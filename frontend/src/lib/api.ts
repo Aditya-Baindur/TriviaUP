@@ -1,4 +1,9 @@
-const BASE_URL = process.env.BASE_URL ?? 'https://backend.triviaup.adityabaindur.com/api/trivia'
+const VITE_URL = await import.meta.env.VITE_BASE_URL
+
+console.log(`Backend URL : ${VITE_URL}`)
+
+const BASE_URL = VITE_URL ?? 'https://backend.triviaup.adityabaindur.com/api/trivia'
+
 const TOKEN_KEY = 'triviaup_token'
 const TOKEN_TTL_MS = 6 * 60 * 60 * 1000 // 6 hours
 
