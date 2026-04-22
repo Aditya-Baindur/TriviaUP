@@ -86,7 +86,10 @@ Full API and deployment documentation:
 ```bash
 git clone https://github.com/Aditya-Baindur/TriviaUP.git
 cd TriviaUP
+```
 
+
+```bash
 pnpm install
 pnpm dev
 ```
