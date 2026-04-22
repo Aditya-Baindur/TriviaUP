@@ -3,6 +3,6 @@ export type RedirectItem = {
   label: string
 }
 
-export type RedirectKey = "github" | "docs"
+export type RedirectKey = 'github' | 'docs'
 
 export type RedirectDB = Record<RedirectKey, RedirectItem>

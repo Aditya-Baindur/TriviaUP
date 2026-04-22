@@ -1,0 +1,8 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+
+  "name": "Trivia UP Frontend",
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/" }
+  ]
+}

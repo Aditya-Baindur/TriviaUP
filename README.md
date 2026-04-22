@@ -15,6 +15,14 @@ Your one-stop shop for everything related to trivia
 ## Demo  
 
 
+<p align="center">
+
+    <a href="https://docs.adityabaindur.dev/docs/TriviaUP/API"><img src="./assets/logo-dark.png" alt="TriviaUP Logo" width="200" /></a>
+     
+</p>
+
+
+
 
 
 ## Docs

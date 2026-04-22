@@ -1,18 +1,18 @@
-import { useEffect } from "react"
-import { sleep } from "@/lib/sleep"
-import { Loader2 } from "lucide-react"
-import { Logo } from "@/components/Logo"
+import { useEffect } from 'react'
+import { sleep } from '@/lib/sleep'
+import { Loader2 } from 'lucide-react'
+import { Logo } from '@/components/Logo'
 
-import type { RedirectDB, RedirectKey } from "@/types/Redirect"
+import type { RedirectDB, RedirectKey } from '@/types/Redirect'
 
 const RedirectDb: RedirectDB = {
   github: {
-    url: "https://github.com/Aditya-Baindur/TriviaUP",
-    label: "GitHub",
+    url: 'https://github.com/Aditya-Baindur/TriviaUP',
+    label: 'GitHub',
   },
   docs: {
-    url: "https://docs.adityabaindur.dev/docs/TriviaUP/API",
-    label: "Docs",
+    url: 'https://docs.adityabaindur.dev/docs/TriviaUP/API',
+    label: 'Docs',
   },
 }
 
@@ -30,7 +30,7 @@ export default function Redirect({ keyName }: Props) {
       if (item) {
         window.location.replace(item.url)
       } else {
-        window.location.replace("/") 
+        window.location.replace('/')
       }
     }
 
@@ -52,7 +52,7 @@ export default function Redirect({ keyName }: Props) {
       <div className="flex flex-col items-center gap-6 text-center">
         <Logo className="h-10 w-auto" />
 
-        <div className="space-y-3 flex flex-col items-center">
+        <div className="flex flex-col items-center space-y-3">
           <p className="text-sm text-muted-foreground">
             Taking you to {item.label}...
           </p>
