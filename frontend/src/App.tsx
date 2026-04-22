@@ -12,7 +12,7 @@ import Play from '@/pages/Play.tsx'
 import Results from '@/pages/Results.tsx'
 import Stats from '@/pages/Stats.tsx'
 import NotFound from '@/pages/NotFound.tsx'
-import Github from '@/pages/Github.tsx'
+import Redirect from '@/pages/Redirect'
 
 const queryClient = new QueryClient()
 
@@ -38,7 +38,8 @@ const App = () => (
             <Route path="/play" element={<Play />} />
             <Route path="/results" element={<Results />} />
             <Route path="/stats" element={<Stats />} />
-            <Route path="/github" element={<Github />} />
+            <Route path="/github" element={<Redirect keyName='github'/>} />
+            <Route path="/docs" element={<Redirect keyName='docs'/>} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>

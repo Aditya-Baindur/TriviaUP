@@ -3,7 +3,8 @@ import { ReactNode } from 'react'
 import { Logo } from './Logo'
 import { ThemeToggle } from './ThemeToggle'
 import { ArrowUpRight } from 'lucide-react'
-import { SiGithub } from "react-icons/si";
+import { SiGithub } from 'react-icons/si'
+import { IoDocument } from 'react-icons/io5'
 
 export function Layout({ children }: { children: ReactNode }) {
   return (
@@ -17,10 +18,15 @@ export function Layout({ children }: { children: ReactNode }) {
           <div className="flex items-center gap-2">
             <ThemeToggle />
 
-          <Link to="/github">
-            <SiGithub />
-          </Link>
-          
+            <div className="flex gap-4">
+              <Link to="/github">
+                <SiGithub />
+              </Link>
+
+              <Link to="/docs">
+                <IoDocument />
+              </Link>
+            </div>
           </div>
         </div>
       </header>
