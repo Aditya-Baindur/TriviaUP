@@ -31,6 +31,17 @@ export async function GET(req: Request) {
     );
   }
 
+  if (category && category !== "any") {
+    const parsedCategory = Number(category);
+
+    if (!Number.isInteger(parsedCategory) || parsedCategory <= 0) {
+      return NextResponse.json(
+        { error: "category must be a positive integer" },
+        { status: 400 }
+      );
+    }
+  }
+
   const params = new URLSearchParams({
     amount: String(amount),
   });

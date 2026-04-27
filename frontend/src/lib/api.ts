@@ -28,6 +28,13 @@ const TOKEN_TTL_MS = 6 * 60 * 60 * 1000 // 6 hours
 export type Difficulty = 'easy' | 'medium' | 'hard' | 'any'
 export type QuestionType = 'boolean' | 'multiple' | 'any'
 
+export interface TriviaCategory {
+  id: number
+  name: string
+  label: string
+  group: string | null
+}
+
 export interface TriviaQuestion {
   id: number
   question: string
@@ -51,6 +58,10 @@ interface TokenResponse {
 interface TriviaResponse {
   amount: number
   questions: TriviaQuestion[]
+}
+
+interface CategoryResponse {
+  categories: TriviaCategory[]
 }
 
 
@@ -120,6 +131,7 @@ export interface FetchTriviaParams {
   amount: number
   difficulty?: Difficulty
   type?: QuestionType
+  category?: number | string
 }
 
 
@@ -146,6 +158,10 @@ export async function fetchTrivia(
     url.searchParams.set('type', params.type)
   }
 
+  if (params.category && params.category !== 'any') {
+    url.searchParams.set('category', String(params.category))
+  }
+
   const res = await fetch(url.toString())
 
   if (!res.ok) {
@@ -169,6 +185,17 @@ export async function fetchTrivia(
 
   const data = (await res.json()) as TriviaResponse
   return data.questions
+}
+
+export async function fetchCategories(): Promise<TriviaCategory[]> {
+  const res = await fetch(`${BASE_URL}/categories`)
+
+  if (!res.ok) {
+    throw new Error('Failed to fetch categories')
+  }
+
+  const data = (await res.json()) as CategoryResponse
+  return data.categories
 }
 
 export function decodeHtml(html: string): string {

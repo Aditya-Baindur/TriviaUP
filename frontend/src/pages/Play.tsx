@@ -59,6 +59,7 @@ const Play = () => {
 
   const difficulty = (params.get('difficulty') as Difficulty) || 'any'
   const type = (params.get('type') as QuestionType) || 'any'
+  const category = params.get('category') || 'any'
   const amount = Math.min(
     Math.max(parseInt(params.get('amount') || '10', 10), 1),
     30
@@ -75,7 +76,7 @@ const Play = () => {
     let cancelled = false
     setQuestions(null)
     setError(null)
-    fetchTrivia({ amount, difficulty, type })
+    fetchTrivia({ amount, difficulty, type, category })
       .then((qs) => {
         if (cancelled) return
         if (!qs.length) {
@@ -91,7 +92,7 @@ const Play = () => {
     return () => {
       cancelled = true
     }
-  }, [amount, difficulty, type])
+  }, [amount, category, difficulty, type])
 
   const current = questions?.[index]
   const total = questions?.length ?? amount
