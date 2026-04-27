@@ -90,6 +90,7 @@ Documentation (includes API playground):
 Full API and deployment documentation:
 
 <p align="center" style="padding: 8px;"><a href="https://docs.adityabaindur.dev/docs/TriviaUP"><img src="https://docs.adityabaindur.dev/button/render?label=&target=%2Fdocs%2FTriviaUP&theme=dark&hideLabel=true" alt="TriviaUP" /></a></p>
+
 ---
 
 ## Local Development
