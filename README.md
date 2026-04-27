@@ -80,14 +80,16 @@ TriviaUP is built around progression, giving users structured difficulty, feedba
 - Vercel (frontend + backend)
 
 Documentation (includes API playground):
-[https://docs.adityabaindur.dev/docs/TriviaUP/API](https://docs.adityabaindur.dev/docs/TriviaUP/API)
+
+<p align="center"><a href="https://docs.adityabaindur.dev/docs/TriviaUP/API"><img src="https://docs.adityabaindur.dev/button/render?label=TriviaUP&target=%2Fdocs%2FTriviaUP%2FAPI&theme=dark" alt="TriviaUP API" /></a></p>
 
 ---
 
 ## Documentation
 
 Full API and deployment documentation:
-[https://docs.adityabaindur.dev/docs/TriviaUP](https://docs.adityabaindur.dev/docs/TriviaUP)
+
+<p align="center"><a href="https://docs.adityabaindur.dev/docs/TriviaUP"><img src="https://docs.adityabaindur.dev/button/render?label=Docs&target=%2Fdocs%2FTriviaUP&theme=dark" alt="Docs TriviaUP" /></a></p>
 
 ---
 
@@ -148,7 +150,8 @@ Backend : [http://localhost:3000/](http://localhost:3000/)
 ### Deployment
 
 Vercel guide:
-[https://docs.adityabaindur.dev/docs/TriviaUP/Hosting](https://docs.adityabaindur.dev/docs/TriviaUP/Hosting)
+
+<p align="center"><a href="https://docs.adityabaindur.dev/docs/TriviaUP/Hosting"><img src="https://docs.adityabaindur.dev/button/render?label=TriviaUP&target=%2Fdocs%2FTriviaUP%2FHosting&theme=dark" alt="TriviaUP Hosting" /></a></p>
 
 ---
 
