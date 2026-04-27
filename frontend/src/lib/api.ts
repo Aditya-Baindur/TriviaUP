@@ -51,13 +51,20 @@ interface StoredToken {
 }
 
 interface TokenResponse {
-  data: { response_code: number; response_message: string; token: string }
+  data?: { response_code: number; response_message: string; token: string }
   token: string
+  reset?: boolean
 }
 
 interface TriviaResponse {
   amount: number
   questions: TriviaQuestion[]
+}
+
+interface TriviaErrorResponse {
+  error?: string
+  code?: number
+  needsTokenReset?: boolean
 }
 
 interface CategoryResponse {
@@ -120,6 +127,27 @@ export async function fetchNewToken(): Promise<string> {
   return token
 }
 
+export async function resetToken(token: string): Promise<string> {
+  const url = new URL(`${BASE_URL}/token`)
+  url.searchParams.set('token', token)
+
+  const res = await fetch(url.toString())
+
+  if (!res.ok) {
+    throw new Error('Failed to reset token')
+  }
+
+  const json = (await res.json()) as TokenResponse
+  const nextToken = json.token ?? json.data?.token
+
+  if (!nextToken) {
+    throw new Error('Invalid reset token response')
+  }
+
+  writeStoredToken(nextToken)
+  return nextToken
+}
+
 export async function ensureToken(): Promise<string> {
   const existing = readStoredToken()
   if (existing) return existing.token
@@ -143,48 +171,58 @@ export interface FetchTriviaParams {
 export async function fetchTrivia(
   params: FetchTriviaParams
 ): Promise<TriviaQuestion[]> {
-  const token = await ensureToken()
+  let token = await ensureToken()
 
-  // adds query params in URL for token, amount and optional for difficulty and type
-  const url = new URL(BASE_URL)
-  url.searchParams.set('amount', String(params.amount))
-  url.searchParams.set('token', token)
+  const makeUrl = (currentToken: string) => {
+    const url = new URL(BASE_URL)
+    url.searchParams.set('amount', String(params.amount))
+    url.searchParams.set('token', currentToken)
 
-  if (params.difficulty) {
-    url.searchParams.set('difficulty', params.difficulty)
+    if (params.difficulty) {
+      url.searchParams.set('difficulty', params.difficulty)
+    }
+
+    if (params.type) {
+      url.searchParams.set('type', params.type)
+    }
+
+    if (params.category && params.category !== 'any') {
+      url.searchParams.set('category', String(params.category))
+    }
+
+    return url
   }
 
-  if (params.type) {
-    url.searchParams.set('type', params.type)
-  }
+  for (let attempt = 0; attempt < 2; attempt += 1) {
+    const res = await fetch(makeUrl(token).toString())
 
-  if (params.category && params.category !== 'any') {
-    url.searchParams.set('category', String(params.category))
-  }
-
-  const res = await fetch(url.toString())
-
-  if (!res.ok) {
-    // Token expired -> retry once
-    if ([400, 401, 403].includes(res.status)) {
-      const fresh = await fetchNewToken()
-      url.searchParams.set('token', fresh)
-
-      const retry = await fetch(url.toString())
-
-      if (!retry.ok) {
-        throw new Error('Failed to fetch trivia')
-      }
-
-      const data = (await retry.json()) as TriviaResponse
+    if (res.ok) {
+      const data = (await res.json()) as TriviaResponse
       return data.questions
     }
 
-    throw new Error('Failed to fetch trivia')
+    let errorBody: TriviaErrorResponse | null = null
+
+    try {
+      errorBody = (await res.json()) as TriviaErrorResponse
+    } catch {
+      errorBody = null
+    }
+
+    if (errorBody?.needsTokenReset && attempt === 0) {
+      token = await resetToken(token)
+      continue
+    }
+
+    if ([400, 401, 403].includes(res.status) && attempt === 0) {
+      token = await fetchNewToken()
+      continue
+    }
+
+    throw new Error(errorBody?.error ?? 'Failed to fetch trivia')
   }
 
-  const data = (await res.json()) as TriviaResponse
-  return data.questions
+  throw new Error('Failed to fetch trivia')
 }
 
 export async function fetchCategories(): Promise<TriviaCategory[]> {

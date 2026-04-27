@@ -1,9 +1,19 @@
 import { NextResponse } from "next/server";
 
-export async function GET() {
+export async function GET(req: Request) {
   try {
+    const { searchParams } = new URL(req.url);
+    const token = searchParams.get("token");
+    const command = token ? "reset" : "request";
+
+    const params = new URLSearchParams({ command });
+
+    if (token) {
+      params.set("token", token);
+    }
+
     const res = await fetch(
-      "https://opentdb.com/api_token.php?command=request"
+      `https://opentdb.com/api_token.php?${params.toString()}`
     );
 
     if (!res.ok) {
@@ -24,6 +34,7 @@ export async function GET() {
 
     return NextResponse.json({
       token: data.token,
+      reset: command === "reset",
     });
   } catch (err) {
     return NextResponse.json(
