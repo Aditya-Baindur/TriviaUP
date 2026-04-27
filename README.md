@@ -81,7 +81,7 @@ TriviaUP is built around progression, giving users structured difficulty, feedba
 
 Documentation (includes API playground):
 
-<p align="center"><a href="https://docs.adityabaindur.dev/docs/TriviaUP/API"><img src="https://docs.adityabaindur.dev/button/render?label=TriviaUP&target=%2Fdocs%2FTriviaUP%2FAPI&theme=dark" alt="TriviaUP API" /></a></p>
+<p align="center" style="padding: 8px;"><a href="https://docs.adityabaindur.dev/docs/TriviaUP/API"><img src="https://docs.adityabaindur.dev/button/render?label=TriviaUP&target=%2Fdocs%2FTriviaUP%2FAPI&theme=dark" alt="TriviaUP API" /></a></p>
 
 ---
 
@@ -89,8 +89,7 @@ Documentation (includes API playground):
 
 Full API and deployment documentation:
 
-<p align="center"><a href="https://docs.adityabaindur.dev/docs/TriviaUP"><img src="https://docs.adityabaindur.dev/button/render?label=Docs&target=%2Fdocs%2FTriviaUP&theme=dark" alt="Docs TriviaUP" /></a></p>
-
+<p align="center" style="padding: 8px;"><a href="https://docs.adityabaindur.dev/docs/TriviaUP"><img src="https://docs.adityabaindur.dev/button/render?label=&target=%2Fdocs%2FTriviaUP&theme=dark&hideLabel=true" alt="TriviaUP" /></a></p>
 ---
 
 ## Local Development
@@ -151,7 +150,7 @@ Backend : [http://localhost:3000/](http://localhost:3000/)
 
 Vercel guide:
 
-<p align="center"><a href="https://docs.adityabaindur.dev/docs/TriviaUP/Hosting"><img src="https://docs.adityabaindur.dev/button/render?label=TriviaUP&target=%2Fdocs%2FTriviaUP%2FHosting&theme=dark" alt="TriviaUP Hosting" /></a></p>
+<p align="center" style="padding: 8px;"><a href="https://docs.adityabaindur.dev/docs/TriviaUP/Hosting"><img src="https://docs.adityabaindur.dev/button/render?label=TriviaUP&target=%2Fdocs%2FTriviaUP%2FHosting&theme=dark" alt="TriviaUP Hosting" /></a></p>
 
 ---
 
