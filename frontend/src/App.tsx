@@ -15,6 +15,7 @@
  *  - "/stats" → Player statistics
  *  - "/github" → Redirect (GitHub)
  *  - "/docs" → Redirect (Docs)
+ *  - "/mockups" → Redirect (Mockups)
  *  - "*" → Fallback (NotFound)
  *
  * @note
@@ -64,6 +65,7 @@ const App = () => (
             <Route path="/stats" element={<Stats />} />
             <Route path="/github" element={<Redirect keyName='github'/>} />
             <Route path="/docs" element={<Redirect keyName='docs'/>} />
+            <Route path="/mockups" element={<Redirect keyName='mockups'/>} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>

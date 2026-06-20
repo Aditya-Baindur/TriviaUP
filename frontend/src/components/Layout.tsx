@@ -35,7 +35,7 @@ export function Layout({ children }: { children: ReactNode }) {
 
       <footer className="border-t border-border/60 py-6">
         <div className="container text-center text-xs text-muted-foreground">
-          Built for the Student Health & Wellness coding challenge by{' '}
+          Built by{' '}
           <a
             href="https://adityabaindur.com"
             target="_blank"

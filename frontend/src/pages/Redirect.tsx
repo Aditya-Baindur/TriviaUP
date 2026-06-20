@@ -1,7 +1,7 @@
 /**
  * Redirect Page
  *
- * Handles client-side redirection based on a key (github, docs).
+ * Handles client-side redirection based on a key (github, docs, mockups).
  * Displays a loading UI while redirecting the user.
  * Falls back to "/" if the key is invalid
  * 
@@ -14,14 +14,13 @@
 
 import { useEffect } from 'react'
 import { sleep } from '@/lib/sleep'
-import { Loader2 } from 'lucide-react'
 import { Logo } from '@/components/Logo'
 
 export type RedirectItem = {
   url: string
   label: string
 }
-export type RedirectKey = 'github' | 'docs'
+export type RedirectKey = 'github' | 'docs' | 'mockups'
 
 export type RedirectDB = Record<RedirectKey, RedirectItem>
 
@@ -34,6 +33,11 @@ const RedirectDb: RedirectDB = {
     url: 'https://docs.adityabaindur.dev/docs/TriviaUP',
     label: 'Docs',
   },
+  mockups: {
+    url: 'https://www.figma.com/design/IlNN4o2KiB6dxAPUBQrfC1/Trivia-UP?node-id=0-1&t=NDhngVg4hZPf58VP-1',
+    label: 'Mockups',
+  },
+
 }
 
 type Props = {
@@ -77,7 +81,10 @@ export default function Redirect({ keyName }: Props) {
             Taking you to {item.label}...
           </p>
 
-          <Loader2 className="h-5 w-5 animate-spin text-muted-foreground" />
+          <div
+            className="h-5 w-5 animate-spin rounded-full border-2 border-muted-foreground border-t-transparent"
+            aria-hidden="true"
+          />
         </div>
       </div>
     </div>
